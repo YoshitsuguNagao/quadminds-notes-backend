@@ -9,8 +9,6 @@ const MongoStore = require('connect-mongo')(session);
 const cors = require('cors');
 require('dotenv').config();
 
-// const indexRouter = require('./routes/index');
-// const usersRouter = require('./routes/users');
 const note = require('./routes/note');
 
 const app = express();
@@ -50,8 +48,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use('/', indexRouter);
-// app.use('/users', usersRouter);
 app.use('/notes', note);
 
 // catch 404 and forward to error handler

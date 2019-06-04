@@ -28,4 +28,17 @@ router.post('/', (req, res, next) => {
     .catch(next)
 });
 
+router.delete('/:id', (req, res, next) => {
+  const { id } = req.params;
+  console.log('id', id)
+  Note.findByIdAndDelete(id)
+  .then(() => {
+    res.status(200);
+    res.json({
+      data: true
+    });
+  })
+  .catch(next)
+});
+
 module.exports = router;
