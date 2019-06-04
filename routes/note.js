@@ -1,22 +1,27 @@
 const express = require('express');
-
-const NotePost = require('../models/NotePost');
+const Note = require('../models/Note');
 
 const router = express.Router();
 
 /* GET users listing. */
 router.get('/', (req, res, next) => {
-  res.send('respond with a resource');
+  Note.find()
+    .then((Notes) => {
+      console.log('Notes', Notes)
+      res.status(200)
+      res.json(Notes);
+    })
+    .catch(next)
 });
 
 router.post('/', (req, res, next) => {
   const { title, content } = req.body;
-  const note = new NotePost({
+  const note = new Note({
     title,
     content,
   });
-  const saveNote = note.save()
-      .then((response) => {
+  note.save()
+    .then((response) => {
       res.status(200)
       res.json(response)
     })
