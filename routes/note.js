@@ -7,7 +7,6 @@ const router = express.Router();
 router.get('/', (req, res, next) => {
   Note.find()
     .then((Notes) => {
-      console.log('Notes', Notes)
       res.status(200)
       res.json(Notes);
     })
@@ -30,7 +29,6 @@ router.post('/', (req, res, next) => {
 
 router.delete('/:id', (req, res, next) => {
   const { id } = req.params;
-  console.log('id', id)
   Note.findByIdAndDelete(id)
   .then(() => {
     res.status(200);
@@ -41,4 +39,46 @@ router.delete('/:id', (req, res, next) => {
   .catch(next)
 });
 
+router.put('/:id', (req, res, next) => {
+  const { id } = req.params;
+  const noteToUpdate =req.body;
+  Note.findByIdAndUpdate(id, noteToUpdate)
+    .then((note) => {
+      res.status(200);
+      res.json({
+        message: "updated",
+        note: note });
+    })
+    .catch(next)
+});
+
+router.put('/:id', (req, res, next) => {
+  const { id } = req.params;
+  const noteToUpdate =req.body;
+  Note.findByIdAndUpdate(id, noteToUpdate)
+    .then((note) => {
+      res.status(200);
+      res.json({
+        message: "updated",
+        note: note });
+    })
+    .catch(next)
+});
+
+router.patch('/:id', (req, res, next) => {
+  const { id } = req.params;
+  const {name,value} =req.body;
+  Note.findById(id)
+    .then((note) => {
+      note[name] = value
+      note.save()
+    })
+    .then((note) => {
+      res.status(200);
+      res.json({
+        message: "updated",
+        note: note });
+    })
+    .catch(next)
+});
 module.exports = router;
