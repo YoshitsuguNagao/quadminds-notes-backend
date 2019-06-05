@@ -3,7 +3,8 @@ const Schema = mongoose.Schema;
 
 const noteSchema = new Schema({
   title: { type: String, required: true },
-  content: { type: String, required: true}
+  content: { type: String, required: true},
+  done: Boolean,
 });
 
 const Note = mongoose.model('Note', noteSchema);

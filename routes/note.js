@@ -3,12 +3,21 @@ const Note = require('../models/Note');
 
 const router = express.Router();
 
-/* GET users listing. */
 router.get('/', (req, res, next) => {
   Note.find()
-    .then((Notes) => {
+    .then((notes) => {
       res.status(200)
-      res.json(Notes);
+      res.json(notes);
+    })
+    .catch(next)
+});
+
+router.get('/:id', (req, res, next) => {
+  const { id } = req.params;
+  Note.find({_id: id})
+    .then((note) => {
+      res.status(200);
+      res.json(note);
     })
     .catch(next)
 });
@@ -20,9 +29,9 @@ router.post('/', (req, res, next) => {
     content,
   });
   note.save()
-    .then((response) => {
+    .then((data) => {
       res.status(200)
-      res.json(response)
+      res.json(data)
     })
     .catch(next)
 });
@@ -45,22 +54,7 @@ router.put('/:id', (req, res, next) => {
   Note.findByIdAndUpdate(id, noteToUpdate)
     .then((note) => {
       res.status(200);
-      res.json({
-        message: "updated",
-        note: note });
-    })
-    .catch(next)
-});
-
-router.put('/:id', (req, res, next) => {
-  const { id } = req.params;
-  const noteToUpdate =req.body;
-  Note.findByIdAndUpdate(id, noteToUpdate)
-    .then((note) => {
-      res.status(200);
-      res.json({
-        message: "updated",
-        note: note });
+      res.json(note);
     })
     .catch(next)
 });
@@ -75,9 +69,7 @@ router.patch('/:id', (req, res, next) => {
     })
     .then((note) => {
       res.status(200);
-      res.json({
-        message: "updated",
-        note: note });
+      res.json(note);
     })
     .catch(next)
 });
