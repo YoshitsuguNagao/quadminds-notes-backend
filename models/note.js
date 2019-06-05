@@ -7,6 +7,6 @@ const noteSchema = new Schema({
   done: Boolean,
 });
 
-const Note = mongoose.model('Note', noteSchema);
+const note = mongoose.model('Note', noteSchema);
 
-module.exports = Note;
+module.exports = note;
