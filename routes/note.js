@@ -52,12 +52,17 @@ router.delete('/:id', (req, res, next) => {
 router.put('/:id', (req, res, next) => {
   const { id } = req.params;
   const noteToUpdate =req.body;
-  Note.findByIdAndUpdate(id, noteToUpdate)
+  let opts = { runValidators: true };
+  // Note.findByIdAndUpdate(id, noteToUpdate)
+  Note.findByIdAndUpdate({_id:id}, {noteToUpdate}, opts, function(error) {
+  })
     .then((note) => {
       res.status(200);
       res.json(note);
     })
-    .catch(next)
+    .catch((error) => {
+      next(error);
+    })
 });
 
 router.patch('/:id', (req, res, next) => {
